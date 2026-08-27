@@ -1,0 +1,29 @@
+{
+  "home": {
+    "label": "Overview",
+    "path": "/"
+  },
+  "categories": [
+    {
+      "title": "Getting Started",
+      "topics": {
+        "What is Crucible?": "/getting-started/what-is-crucible",
+        "How a Workspace Works": "/getting-started/how-a-workspace-works"
+      }
+    },
+    {
+      "title": "Content Authoring",
+      "topics": {
+        "Markdown Entries": "/content-authoring/markdown-lessons",
+        "Project Checks": "/content-authoring/concept-checks"
+      }
+    },
+    {
+      "title": "Navigation & Features",
+      "topics": {
+        "Search and Navigation": "/navigation-and-features/search-and-navigation",
+        "Themes and Downloads": "/navigation-and-features/themes-and-downloads"
+      }
+    }
+  ]
+}
