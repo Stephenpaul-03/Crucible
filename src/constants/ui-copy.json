@@ -1,5 +1,6 @@
 {
   "welcome": {
+    "eyebrow": "Workbench notes",
     "title": "Hi, I’m",
     "description": "I build hardware projects and use Crucible to document what I test, break, learn, and rebuild.",
     "intro": "It’s where I keep my schematics, measurements, code, decisions, and the dead ends along the way.",

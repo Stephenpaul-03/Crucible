@@ -1,3 +1,5 @@
+import { sitePath } from "@/lib/site-path"
+
 export interface Subject {
   id: string
   label: string
@@ -9,7 +11,7 @@ export const SUBJECTS: Subject[] = [
   {
     id: "Template",
     label: "Crucible Template",
-    sidebarUrl: "/content/Template_Sidebar.json",
+    sidebarUrl: sitePath("/content/Template_Sidebar.json"),
     tags: ["Hardware", "Documentation", "Template"],
   },
 ];
