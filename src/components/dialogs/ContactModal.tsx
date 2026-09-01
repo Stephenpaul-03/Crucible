@@ -1,4 +1,4 @@
-import { ExternalLink, Github, Globe, Linkedin, MessageCircle } from "lucide-react"
+import { ExternalLink, Github, Linkedin, Mail, MessageCircle } from "lucide-react"
 
 import copy from "@/constants/ui-copy.json"
 import {
@@ -16,19 +16,19 @@ type ContactModalProps = {
 
 const contactLinks = [
   {
-    label: copy.contact.githubAction,
-    href: "https://github.com",
-    icon: Github,
+    label: copy.contact.emailAction,
+    href: "mailto:stephenpaul4040@gmail.com",
+    icon: Mail,
   },
   {
     label: copy.contact.linkedinAction,
-    href: "https://linkedin.com",
+    href: "https://www.linkedin.com/in/stephen-paul-i/",
     icon: Linkedin,
   },
   {
-    label: copy.contact.portfolioAction,
-    href: "https://portfolio.com",
-    icon: Globe,
+    label: copy.contact.githubAction,
+    href: "https://github.com/Stephenpaul-03",
+    icon: Github,
   },
 ]
 
