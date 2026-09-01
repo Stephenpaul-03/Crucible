@@ -1,4 +1,4 @@
-# Crucible Project Template
+# Crucible Template
 
 This is the structure I use when I start documenting a hardware build in **Crucible**. It gives me a consistent place for my notes, measurements, images, experiments, and decisions.
 

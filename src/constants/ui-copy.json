@@ -29,7 +29,7 @@
     "title": "Say hello",
     "description": "Want to talk hardware, compare notes, or ask about one of my projects? These are the best places to reach me.",
     "note": "Email is the best way to get in touch. You can also find me on LinkedIn or GitHub.",
-    "emailAction": "Send me an email",
+    "emailAction": "Send an email",
     "githubAction": "Find me on GitHub",
     "linkedinAction": "Connect on LinkedIn",
     "portfolioAction": "Visit my portfolio"
