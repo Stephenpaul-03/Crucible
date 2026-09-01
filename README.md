@@ -1,7 +1,11 @@
 # Crucible
 
 <p align="center">
-  <img src="src/assets/icon-light.png" alt="Crucible logo" width="120" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="src/assets/icon-dark.png" />
+    <source media="(prefers-color-scheme: light)" srcset="src/assets/icon-light.png" />
+    <img src="src/assets/icon-light.png" alt="Crucible logo" width="120" />
+  </picture>
 </p>
 
 <p align="center"><strong>A hardware journal for ideas that have not met a soldering iron yet.</strong></p>
