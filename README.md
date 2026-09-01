@@ -1,61 +1,47 @@
 # Crucible
 
-Crucible is a markdown-powered workshop for documenting hardware projects. It brings project overviews, build logs, experiments, measurements, firmware, references, images, and lessons learned into a searchable workspace.
+<p align="center">
+  <img src="src/assets/icon-light.png" alt="Crucible logo" width="120" />
+</p>
 
-## Features
+<p align="center"><strong>A hardware journal for ideas that have not met a soldering iron yet.</strong></p>
 
-- Project cards with tags and searchable project metadata
-- Per-project navigation loaded from JSON
-- Markdown pages with frontmatter, fenced code, images, and quiz blocks
-- Light and dark themes
-- Command-palette search and desktop-oriented navigation
+Crucible is where I document the full, gloriously messy journey of building hardware. Not just the polished final result with the wires hidden and the smoke edited out—the sketches, wrong turns, measurements, failed assumptions, tiny victories, and the occasional component that mysteriously stops working.
 
-## Tech stack
+I built it because a hardware project is more than a finished object. It is a trail of decisions. Crucible gives that trail a home.
 
-- React 19 and TypeScript
-- Vite
-- Tailwind CSS 4
-- Radix UI and shadcn/ui patterns
-- `marked` for Markdown rendering and Prism for code highlighting
+## What Crucible is for
 
-## Getting started
+Each hardware build gets its own workspace, so I can move from the big picture to the bench-level details without losing the thread. A project can hold:
 
-Requirements: Node.js 18+ and npm.
+- The original idea, goals, constraints, and current status
+- Parts lists, design notes, wiring diagrams, and reference images
+- Firmware, code snippets, calculations, and implementation notes
+- Build logs, experiments, measurements, and observations
+- Failures, abandoned approaches, fixes, and lessons learned
+- The next thing I want to try when I have both time and the right resistor
 
-```sh
-npm install
-npm run dev
-```
+The goal is not to pretend every project followed a clean plan. The goal is to make the thinking visible—and make the next attempt a little less mysterious.
 
-Open the local URL printed by Vite. The production build can be checked with:
+## What it can do
 
-```sh
-npm run build
-npm run preview
-```
+- Keep multiple hardware projects separate while making them easy to browse
+- Give every project its own sidebar, categories, overview, and build narrative
+- Render Markdown entries with headings, links, images, tables, and code blocks
+- Highlight firmware and other code so it remains readable in a long project log
+- Search project entries and tags from a command palette
+- Add structured quizzes and checks for pre-power testing, troubleshooting, or review
+- Download project entries as Markdown or print them as PDFs
+- Adapt the reading experience with collapsible sidebars and light/dark themes
 
-## Content model
+## The kind of projects it is meant for
 
-Each hardware build is a project workspace made from three parts:
+Crucible is a good fit for electronics builds, embedded experiments, sensor projects, robotics, custom tools, and anything else that involves a workbench, a multimeter, and a willingness to ask, “Why is that warm?”
 
-```text
-src/constants/subjects.ts
-public/content/<ProjectId>_Sidebar.json
-public/content/<ProjectId>/home.md
-public/content/<ProjectId>/<Category>/<entry-slug>.md
-```
+It is especially useful when the process matters as much as the result: long-running builds, iterative prototypes, repair notes, experiments with uncertain outcomes, and projects I know I will want to understand again six months from now.
 
-Register the project in `src/constants/subjects.ts`, add its sidebar JSON, then add the Markdown files referenced by that sidebar. Update the matching project copy in `src/constants/ui-copy.json` when adding a new workspace.
+## The philosophy
 
-Topic routes use the category title and URL slug to resolve Markdown files. Numeric filename prefixes such as `01-first-power-on.md` are supported. See [USAGE.md](USAGE.md) for the complete authoring workflow and [ADDING_PROJECTS.md](ADDING_PROJECTS.md) for the short checklist.
+Document the goal before the result. Record the measurement before the conclusion. Keep the failed version beside the successful one. If something broke, write down what broke, what I suspected, and what actually fixed it.
 
-## Development commands
-
-| Command | Purpose |
-| --- | --- |
-| `npm run dev` | Start the Vite development server |
-| `npm run build` | Type-check and create a production build |
-| `npm run lint` | Run ESLint |
-| `npm run preview` | Serve the production build locally |
-
-Before opening a change, run `npm run build`, `npm run lint`, and `git diff --check`.
+Crucible is my attempt to make a durable record of that process—part workshop notebook, part project archive, and part evidence that the magic smoke was not released entirely in vain.
