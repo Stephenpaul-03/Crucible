@@ -6,6 +6,9 @@ import { defineConfig } from "vite"
 // https://vite.dev/config/
 export default defineConfig({
   base: "/Crucible/",
+  server: {
+    host: true,
+  },
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
