@@ -7,6 +7,7 @@ export type SidebarNavigationJson = {
   home: NavigationPageData
   categories: Array<{
     title: string
+    icon?: string
     topics: Record<string, string | { path: string; layout?: string }>
   }>
 }
@@ -20,6 +21,7 @@ export function parseSidebarJson(nav: SidebarNavigationJson) {
   const homePage = nav.home
   const sidebarCategories: SidebarCategoryData[] = nav.categories.map((category) => ({
     title: category.title,
+    icon: category.icon,
     items: Object.entries(category.topics).map(([label, value]) => {
       let path = ""
       let layout: string | undefined = undefined

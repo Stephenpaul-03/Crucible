@@ -15,5 +15,6 @@ export type SidebarItemData = NavigationPageData & {
 
 export type SidebarCategoryData = {
   title: string
+  icon?: string
   items: SidebarItemData[]
 }

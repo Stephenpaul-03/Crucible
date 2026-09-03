@@ -33,6 +33,7 @@ Create `public/content/NEW_ID_Sidebar.json` with an overview and categories:
   "categories": [
     {
       "title": "Build Log",
+      "icon": "wrench",
       "topics": {
         "First power-on": "/build-log/first-power-on"
       }
@@ -42,6 +43,8 @@ Create `public/content/NEW_ID_Sidebar.json` with an overview and categories:
 ```
 
 Category titles double as directory names. Topic paths become routes and markdown filenames.
+
+The optional `icon` field configures the accordion-header icon. Supported names include `activity`, `bike`, `book`, `box`, `circle-dot`, `cog`, `compass`, `cpu`, `factory`, `file-text`, `flame`, `folder`, `gauge`, `git-branch`, `history`, `rocket`, `ruler`, `search`, `settings`, `shield`, `shopping-cart`, `sliders`, `sparkles`, `trophy`, `user`, `waves`, `wind`, `wrench`, and `zap`. Unknown or omitted names use the folder icon.
 
 ### 3. Add project entries
 

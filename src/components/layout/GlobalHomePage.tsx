@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react"
-import { ArrowRight, BookOpen, Compass, Search, Sparkles, X } from "lucide-react"
+import { ArrowRight, BookOpen, BookOpenCheck, Compass, Search, Sparkles, X } from "lucide-react"
 
 import iconDark from "@/assets/icon-dark.png"
 import iconLight from "@/assets/icon-light.png"
@@ -8,17 +8,20 @@ import { SUBJECTS, type Subject } from "@/constants/subjects"
 import { ModeToggle } from "@/components/theme/mode-toggle"
 import { useTheme } from "@/components/theme/theme-context"
 import type { MouseEvent } from "react"
+import type { ReadingProgress } from "@/lib/reading-progress"
 
 type GlobalHomePageProps = {
   onSelectWorkspace: (subject: Subject, event: MouseEvent<HTMLButtonElement>) => void
   showWelcome: boolean
   onDismissWelcome: () => void
   onOpenContact: () => void
+  continueReading: ReadingProgress | null
+  onContinueReading: () => void
 }
 
 const pointIcons = { book: BookOpen, compass: Compass, sparkles: Sparkles } as const
 
-export function GlobalHomePage({ onSelectWorkspace, showWelcome, onDismissWelcome, onOpenContact }: GlobalHomePageProps) {
+export function GlobalHomePage({ onSelectWorkspace, showWelcome, onDismissWelcome, onOpenContact, continueReading, onContinueReading }: GlobalHomePageProps) {
   const { theme } = useTheme()
   const [query, setQuery] = useState("")
   const logoSrc = theme === "dark" ? iconDark : iconLight
@@ -112,6 +115,18 @@ export function GlobalHomePage({ onSelectWorkspace, showWelcome, onDismissWelcom
           )}
         </section>
       </main>
+      {continueReading && (
+        <button
+          type="button"
+          onClick={onContinueReading}
+          className="fixed right-4 bottom-4 z-30 flex max-w-[calc(100vw-2rem)] items-center gap-3 rounded-full border border-zinc-200 bg-white/95 px-4 py-3 text-left shadow-xl backdrop-blur-xl transition-transform hover:-translate-y-0.5 dark:border-white/[0.1] dark:bg-[#101116]/95 md:right-6 md:bottom-6"
+          aria-label={`Continue reading ${continueReading.lessonLabel}`}
+        >
+          <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-zinc-950 text-white dark:bg-zinc-50 dark:text-zinc-950"><BookOpenCheck className="size-4" aria-hidden="true" /></span>
+          <span className="min-w-0 pr-1"><span className="block font-mono text-[9px] uppercase tracking-[0.16em] text-zinc-500">Continue reading · {continueReading.subjectLabel}</span><span className="block max-w-56 truncate text-sm font-semibold text-zinc-950 dark:text-zinc-50">{continueReading.lessonLabel}</span></span>
+          <ArrowRight className="size-4 shrink-0 text-zinc-500" aria-hidden="true" />
+        </button>
+      )}
     </div>
   )
 }

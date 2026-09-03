@@ -13,12 +13,14 @@ import { NotFoundPage } from "@/components/layout/NotFoundPage"
 import { GlobalHomePage } from "@/components/layout/GlobalHomePage"
 import { WorkspaceLoader } from "@/components/layout/WorkspaceLoader"
 import { PropertyRenderer } from "@/components/property/PropertyRenderer"
+import { LessonNavigation } from "@/components/property/LessonNavigation"
 import { Sidebar } from "@/components/layout/Sidebar"
 import { TopNavbar } from "@/components/layout/TopNavbar"
 import { OutlineSidebar } from "@/components/layout/OutlineSidebar"
 import { ContactModal } from "@/components/dialogs/ContactModal"
 import type { NavigationPageData, SidebarCategoryData, SidebarItemData } from "@/types/navigation"
 import { sitePath, siteRoot } from "@/lib/site-path"
+import { readReadingProgress, saveReadingProgress, type ReadingProgress } from "@/lib/reading-progress"
 
 const initialActivePath = "/"
 
@@ -86,6 +88,9 @@ export function AppShell() {
   const [loadingWorkspace, setLoadingWorkspace] = useState<Subject | null>(null)
   const [isCommandOpen, setIsCommandOpen] = useState(false)
   const [activeSectionTitle, setActiveSectionTitle] = useState<string>()
+  const [readingProgress, setReadingProgress] = useState<ReadingProgress | null>(() =>
+    readReadingProgress("crucible-reading-progress"),
+  )
 
   // Collapsible States
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() =>
@@ -365,6 +370,43 @@ export function AppShell() {
 
   const { currentPage, parentLabel } = getCurrentPage(activePath, navData.homePage, navData.sidebarCategories)
 
+  useEffect(() => {
+    if (!isNavigationReady || activePath === "/" || !currentPage.slug) return
+    const progress: ReadingProgress = {
+      subjectId: activeSubject.id,
+      subjectLabel: activeSubject.label,
+      path: activePath,
+      slug: currentPage.slug,
+      lessonLabel: currentPage.label,
+    }
+    setReadingProgress(progress)
+    saveReadingProgress("crucible-reading-progress", progress)
+  }, [activePath, activeSubject.id, activeSubject.label, currentPage.label, currentPage.slug, isNavigationReady])
+
+  function handleContinueReading() {
+    if (!readingProgress) return
+    const targetSubject = SUBJECTS.find((subject) => subject.id === readingProgress.subjectId)
+    if (!targetSubject) return
+
+    setLoadingWorkspace(targetSubject)
+    window.setTimeout(() => {
+      setIsGlobalHome(false)
+      setActiveSubject(targetSubject)
+      setActivePath("/")
+      setPendingSlug(readingProgress.slug)
+      setLoadingWorkspace(null)
+    }, 500)
+  }
+
+  const continueReadingPath = readingProgress?.subjectId === activeSubject.id
+    ? readingProgress.path
+    : undefined
+  const lessonIndex = navData.sidebarItems.findIndex((item) => item.path === activePath)
+  const previousLesson = lessonIndex > 0 ? navData.sidebarItems[lessonIndex - 1] : undefined
+  const nextLesson = lessonIndex >= 0 && lessonIndex < navData.sidebarItems.length - 1
+    ? navData.sidebarItems[lessonIndex + 1]
+    : undefined
+
   // Track scroll position to update active heading highlight
   useEffect(() => {
     const mainEl = document.querySelector("main")
@@ -544,21 +586,28 @@ export function AppShell() {
             />
           )}
           <Sidebar
+            key={activeSubject.id}
             categories={navData.sidebarCategories}
             activePath={activePath}
             onSelectItem={handleSelectPath}
             isCollapsed={isSidebarCollapsed}
+            continueReadingPath={continueReadingPath}
           />
           <main data-content-scroll className="touch-scroll-y mobile-bottom-space min-h-0 min-w-0 flex-1 overflow-y-auto bg-zinc-50 [scrollbar-color:rgb(161_161_170)_transparent] [scrollbar-width:thin] dark:bg-[#050608] dark:[scrollbar-color:rgb(63_63_70)_transparent]">
             {isNavigationReady ? (
-              <PropertyRenderer
-                onActiveSectionChange={setActiveSectionTitle}
-                activeSubject={activeSubject}
-                currentPage={currentPage}
-                parentLabel={parentLabel}
-                fallback={<NotFoundPage />}
-                onHeadingsLoaded={setHeadings}
-              />
+              <>
+                <PropertyRenderer
+                  onActiveSectionChange={setActiveSectionTitle}
+                  activeSubject={activeSubject}
+                  currentPage={currentPage}
+                  parentLabel={parentLabel}
+                  fallback={<NotFoundPage />}
+                  onHeadingsLoaded={setHeadings}
+                />
+                {lessonIndex >= 0 && (
+                  <LessonNavigation previous={previousLesson} next={nextLesson} onSelect={handleSelectPath} />
+                )}
+              </>
             ) : (
               <div className="flex h-64 items-center justify-center text-sm text-zinc-500">Loading content…</div>
             )}
@@ -619,6 +668,8 @@ export function AppShell() {
           showWelcome={isWelcomeOpen}
           onDismissWelcome={handleCloseWelcome}
           onOpenContact={() => setIsContactOpen(true)}
+          continueReading={readingProgress}
+          onContinueReading={handleContinueReading}
         />
       ) : (
         <AppContextMenu
